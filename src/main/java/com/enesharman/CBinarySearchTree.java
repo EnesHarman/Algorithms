@@ -5,7 +5,7 @@ import java.util.Queue;
 
 public class CBinarySearchTree {
     public static void main(String[] args) {
-        Tree root = generateDummy();
+        BSTree root = generateDummy();
         insertion(root, 21);
         search(root, 45);
         traverse(root);
@@ -15,7 +15,7 @@ public class CBinarySearchTree {
     }
 
 
-    public static Tree findLowestAncestor(Tree root, Tree node1, Tree node2) {
+    public static BSTree findLowestAncestor(BSTree root, BSTree node1, BSTree node2) {
         /*The idea is moving the root pointer until find a node which is greater than one node and less than other*/
         if (root == null) {
             return null;
@@ -30,31 +30,31 @@ public class CBinarySearchTree {
     }
 
 
-    public static boolean isBalanced(Tree tree) {
+    public static boolean isBalanced(BSTree BSTree) {
         /*This algorithm uses height finder method. The idea is checking heights of root's branches recursively.*/
-        if (tree == null) {
+        if (BSTree == null) {
             return true;
         }
 
-        int leftH = findHeight(tree.left);
-        int rightH = findHeight(tree.right);
+        int leftH = findHeight(BSTree.left);
+        int rightH = findHeight(BSTree.right);
 
         if (Math.abs(leftH - rightH) > 1) {
             return false;
         }
 
-        return isBalanced(tree.left) && isBalanced(tree.right);
+        return isBalanced(BSTree.left) && isBalanced(BSTree.right);
     }
 
-    public static int findHeight(Tree tree) {
+    public static int findHeight(BSTree BSTree) {
         /*To find the height of given node, we should iterate all branches of it and keep a count.*/
-        if (tree == null) {
+        if (BSTree == null) {
             return -1;
         }
-        return Math.max(findHeight(tree.left), findHeight(tree.right)) + 1;
+        return Math.max(findHeight(BSTree.left), findHeight(BSTree.right)) + 1;
     }
 
-    public static Tree delete(Tree tree, int key) {
+    public static BSTree delete(BSTree BSTree, int key) {
         /* To delete a value from a tree, first the desired node with the key should be found. After that there are 3 options:
                 1. The node does not have any branch (it's a leaf).
                 2. The node has one branch.
@@ -66,30 +66,30 @@ public class CBinarySearchTree {
 
         *
         * */
-        if (tree == null) {
+        if (BSTree == null) {
             return null;
         }
 
         //find node
-        if (tree.val < key) {
-            tree.right = delete(tree.right, key);
-        } else if (tree.val > key) {
-            tree.left = delete(tree.left, key);
+        if (BSTree.val < key) {
+            BSTree.right = delete(BSTree.right, key);
+        } else if (BSTree.val > key) {
+            BSTree.left = delete(BSTree.left, key);
         } else {
-            if (tree.left == null) {
-                return tree.right; //Scenario 1 or 2, depending on the right branch.
-            } else if (tree.right == null) {
-                return tree.left; //Scenario 2. only left branch exists.
+            if (BSTree.left == null) {
+                return BSTree.right; //Scenario 1 or 2, depending on the right branch.
+            } else if (BSTree.right == null) {
+                return BSTree.left; //Scenario 2. only left branch exists.
             }
             //Scenario 3. Both branches are exist. Successor transfer operation is done.
-            Tree successor = findMin(tree.right);
-            tree.val = successor.val;
-            tree.right = delete(tree.right, successor.val);
+            BSTree successor = findMin(BSTree.right);
+            BSTree.val = successor.val;
+            BSTree.right = delete(BSTree.right, successor.val);
         }
-        return tree;
+        return BSTree;
     }
 
-    public static Tree findMin(Tree root) {
+    public static BSTree findMin(BSTree root) {
         /*Find the leftest node in the tree with a loop.*/
         while (root.left != null) {
             root = root.left;
@@ -97,16 +97,16 @@ public class CBinarySearchTree {
         return root;
     }
 
-    public static void levelOrder(Tree tree) {
+    public static void levelOrder(BSTree BSTree) {
         /*A queue is used here. Nodes in a level is inserted into the queue and 'printed' after reading */
-        if (tree == null) {
+        if (BSTree == null) {
             return;
         }
-        Queue<Tree> queue = new ArrayDeque<>();
-        queue.add(tree);
+        Queue<BSTree> queue = new ArrayDeque<>();
+        queue.add(BSTree);
 
         while (!queue.isEmpty()) {
-            Tree node = queue.poll();
+            BSTree node = queue.poll();
             System.out.print(" " + node.val);
             if (node.left != null) {
                 queue.add(node.left);
@@ -118,32 +118,32 @@ public class CBinarySearchTree {
 
     }
 
-    public static Tree insertion(Tree tree, int value) {
+    public static BSTree insertion(BSTree BSTree, int value) {
         /*To insert a value to binary tree. First the correct place should be found. It's done by traversing the tree from the root.*/
-        if (tree == null) {
-            return new Tree(value);
+        if (BSTree == null) {
+            return new BSTree(value);
         }
-        if (value < tree.val) {
-            tree.left = insertion(tree.left, value);
+        if (value < BSTree.val) {
+            BSTree.left = insertion(BSTree.left, value);
         } else {
-            tree.right = insertion(tree.right, value);
+            BSTree.right = insertion(BSTree.right, value);
         }
-        return tree;
+        return BSTree;
     }
 
-    public static Tree search(Tree tree, int value) {
+    public static BSTree search(BSTree BSTree, int value) {
         /*Searching is very similar to insertion. Data is compared with the node that the pointer shows.*/
-        if (tree == null || tree.val == value) {
-            return tree;
+        if (BSTree == null || BSTree.val == value) {
+            return BSTree;
         }
-        if (tree.val > value) {
-            return search(tree.left, value);
+        if (BSTree.val > value) {
+            return search(BSTree.left, value);
         } else {
-            return search(tree.right, value);
+            return search(BSTree.right, value);
         }
     }
 
-    public static void traverse(Tree root) {
+    public static void traverse(BSTree root) {
         /*There are different traverse algorithm for different purposes. This one is called Inorder traversing.*/
         if (root == null) {
             return;
@@ -153,37 +153,37 @@ public class CBinarySearchTree {
         traverse(root.right);
     }
 
-    public static Tree generateDummy() {
-        Tree root = new Tree(10);
+    public static BSTree generateDummy() {
+        BSTree root = new BSTree(10);
 
-        root.left = new Tree(5);
-        root.right = new Tree(15);
+        root.left = new BSTree(5);
+        root.right = new BSTree(15);
 
-        root.left.left = new Tree(3);
-        root.left.right = new Tree(7);
-        root.right.left = new Tree(12);
-        root.right.right = new Tree(18);
+        root.left.left = new BSTree(3);
+        root.left.right = new BSTree(7);
+        root.right.left = new BSTree(12);
+        root.right.right = new BSTree(18);
 
-        root.left.left.left = new Tree(1);
-        root.left.left.right = new Tree(4);
-        root.left.right.left = new Tree(6);
-        root.left.right.right = new Tree(8);
-        root.right.left.left = new Tree(11);
-        root.right.left.right = new Tree(13);
-        root.right.right.left = new Tree(17);
-        root.right.right.right = new Tree(20);
+        root.left.left.left = new BSTree(1);
+        root.left.left.right = new BSTree(4);
+        root.left.right.left = new BSTree(6);
+        root.left.right.right = new BSTree(8);
+        root.right.left.left = new BSTree(11);
+        root.right.left.right = new BSTree(13);
+        root.right.right.left = new BSTree(17);
+        root.right.right.right = new BSTree(20);
 
         return root;
     }
 }
 
 
-class Tree {
+class BSTree {
     public int val;
-    public Tree left;
-    public Tree right;
+    public BSTree left;
+    public BSTree right;
 
-    public Tree(int val) {
+    public BSTree(int val) {
         this.val = val;
     }
 }
