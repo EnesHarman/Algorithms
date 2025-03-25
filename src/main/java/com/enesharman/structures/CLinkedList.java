@@ -1,4 +1,4 @@
-package com.enesharman;
+package com.enesharman.structures;
 
 
 public class CLinkedList {

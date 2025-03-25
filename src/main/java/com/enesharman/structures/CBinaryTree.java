@@ -1,4 +1,4 @@
-package com.enesharman;
+package com.enesharman.structures;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

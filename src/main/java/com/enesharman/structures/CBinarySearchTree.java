@@ -1,7 +1,8 @@
-package com.enesharman;
+package com.enesharman.structures;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.Stack;
 
 public class CBinarySearchTree {
     public static void main(String[] args) {
@@ -12,6 +13,7 @@ public class CBinarySearchTree {
         levelOrder(root);
         delete(root, 18);
         isBalanced(root);
+        traverseIterative(root);
     }
 
 
@@ -151,6 +153,22 @@ public class CBinarySearchTree {
         traverse(root.left);
         System.out.print(" " + root.val);
         traverse(root.right);
+    }
+
+    public static void traverseIterative(BSTree root) {
+        Stack<BSTree> stack = new Stack<>();
+        BSTree current = root;
+
+        while (current!=null || !stack.isEmpty()) {
+            while (current != null) {
+                stack.push(current);
+                current = current.left;
+            }
+
+            current = stack.pop();
+            System.out.println(current.val);
+            current = current.right;
+        }
     }
 
     public static BSTree generateDummy() {
